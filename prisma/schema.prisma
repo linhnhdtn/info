@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile Profile?
+  work    Work?
+  events  Event[]
+  notes   Note[]
+}
+
+// ─────────────────────────────────────────────
+// PERSONAL PROFILE
+// ─────────────────────────────────────────────
+model Profile {
+  id        String    @id @default(cuid())
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  firstName String?
+  lastName  String?
+  phone     String?
+  email     String?
+  address   String?
+  city      String?
+  country   String?
+  birthday  DateTime?
+  avatarUrl String?
+  bio       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────
+// WORK INFORMATION
+// ─────────────────────────────────────────────
+model Work {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  company     String?
+  position    String?
+  department  String?
+  employeeId  String?
+  workEmail   String?
+  workPhone   String?
+  workAddress String?
+  startDate   DateTime?
+  endDate     DateTime?
+  salary      String?
+  notes       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────
+// SCHEDULE / CALENDAR
+// ─────────────────────────────────────────────
+model Event {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  allDay      Boolean   @default(false)
+  location    String?
+  color       String?   @default("#3B82F6")
+
+  reminderAt   DateTime?
+  reminderNote String?
+
+  isRepeating Boolean   @default(false)
+  repeatRule  String?
+  repeatUntil DateTime?
+
+  isArchived Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, startDate])
+}
+
+// ─────────────────────────────────────────────
+// NOTES
+// ─────────────────────────────────────────────
+model Note {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title      String?
+  content    String
+  color      String?  @default("#FFFFFF")
+  isPinned   Boolean  @default(false)
+  isArchived Boolean  @default(false)
+  tags       String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, isPinned])
+  @@index([userId, updatedAt])
+}

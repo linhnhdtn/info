@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: info_postgres
+    environment:
+      POSTGRES_USER: info_user
+      POSTGRES_PASSWORD: info_pass
+      POSTGRES_DB: info_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - info_network
+
+volumes:
+  postgres_data:
+
+networks:
+  info_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.100.0.0/24
