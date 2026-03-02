@@ -6,10 +6,12 @@ import { RecentNotes } from "@/components/dashboard/RecentNotes"
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="space-y-6">
       <WelcomeCard />
-      <DateTimeCard />
-      <LunarConverterCard />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <DateTimeCard />
+        <LunarConverterCard />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <UpcomingEvents />
         <RecentNotes />

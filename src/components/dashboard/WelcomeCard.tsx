@@ -16,14 +16,9 @@ export function WelcomeCard() {
       .catch(() => setLoading(false))
   }, [])
 
-  const now = new Date()
-  const hour = now.getHours()
+  const hour = new Date().getHours()
   const greeting = hour < 12 ? "Chào buổi sáng" : hour < 18 ? "Chào buổi chiều" : "Chào buổi tối"
   const displayName = profile ? [profile.firstName, profile.lastName].filter(Boolean).join(" ") : null
-
-  const today = now.toLocaleDateString("vi-VN", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-  })
 
   return (
     <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl p-6">
@@ -46,7 +41,6 @@ export function WelcomeCard() {
               {greeting}{displayName ? `, ${displayName}!` : "!"}
             </h2>
           )}
-          <p className="text-blue-100 text-sm capitalize">{today}</p>
         </div>
       </div>
     </div>

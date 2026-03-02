@@ -54,7 +54,7 @@ export function LunarConverterCard() {
   })()
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <ArrowLeftRight className="h-5 w-5" />
