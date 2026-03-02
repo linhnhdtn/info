@@ -71,3 +71,33 @@ export const EVENT_COLORS = [
   "#EC4899",
   "#14B8A6",
 ]
+
+export interface Budget {
+  id: string
+  month: number
+  totalBudget: number
+  dailyAllowances: number[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Expense {
+  id: string
+  amount: number
+  description: string | null
+  category: string
+  date: string
+  createdAt: string
+  updatedAt: string
+}
+
+export const EXPENSE_CATEGORIES = [
+  { label: "Ăn uống", value: "food" },
+  { label: "Di chuyển", value: "transport" },
+  { label: "Mua sắm", value: "shopping" },
+  { label: "Giải trí", value: "entertainment" },
+  { label: "Hóa đơn", value: "bills" },
+  { label: "Khác", value: "other" },
+] as const
+
+export type ExpenseCategory = (typeof EXPENSE_CATEGORIES)[number]["value"]

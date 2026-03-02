@@ -3,6 +3,7 @@ import { DateTimeCard } from "@/components/dashboard/DateTimeCard"
 import { LunarConverterCard } from "@/components/dashboard/LunarConverterCard"
 import { UpcomingEvents } from "@/components/dashboard/UpcomingEvents"
 import { RecentNotes } from "@/components/dashboard/RecentNotes"
+import { ExpenseSummary } from "@/components/dashboard/ExpenseSummary"
 
 export default function DashboardPage() {
   return (
@@ -15,6 +16,9 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <UpcomingEvents />
         <RecentNotes />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ExpenseSummary />
       </div>
     </div>
   )

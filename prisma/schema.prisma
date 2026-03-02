@@ -17,10 +17,12 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  profile Profile?
-  work    Work?
-  events  Event[]
-  notes   Note[]
+  profile  Profile?
+  work     Work?
+  events   Event[]
+  notes    Note[]
+  budgets  Budget[]
+  expenses Expense[]
 }
 
 // ─────────────────────────────────────────────
@@ -121,4 +123,38 @@ model Note {
 
   @@index([userId, isPinned])
   @@index([userId, updatedAt])
+}
+
+// ─────────────────────────────────────────────
+// EXPENSE MANAGEMENT
+// ─────────────────────────────────────────────
+model Budget {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  month           Int      // YYYYMM format (e.g. 202603)
+  totalBudget     Float
+  dailyAllowances Json     // Array of floats, one per day of month
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, month])
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  amount      Float
+  description String?
+  category    String
+  date        DateTime
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId, date])
 }

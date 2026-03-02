@@ -16,5 +16,8 @@ export const config = {
     "/api/events/:path*",
     "/api/notes/:path*",
     "/api/upload/:path*",
+    "/expenses/:path*",
+    "/api/expenses/:path*",
+    "/api/budgets/:path*",
   ],
 }
