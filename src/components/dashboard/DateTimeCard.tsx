@@ -1,7 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Calendar, Clock } from "lucide-react"
+import { ArrowLeftRight, Calendar, Clock } from "lucide-react"
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { LunarConverterCard } from "@/components/dashboard/LunarConverterCard"
 import { getLunarDateInfo, getHoangDaoHours, type LunarDateInfo, type HoangDaoHour } from "@/lib/lunar"
 
 const WEEKDAYS = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"]
@@ -52,6 +54,20 @@ export function DateTimeCard() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="flex items-center gap-3">
           <Clock className="h-5 w-5 text-violet-200 shrink-0" />
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                title="Chuyển đổi lịch âm dương"
+                className="rounded-md p-1 hover:bg-white/20 transition-colors"
+              >
+                <ArrowLeftRight className="h-4 w-4 text-violet-200" />
+              </button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogTitle className="sr-only">Chuyển đổi lịch âm dương</DialogTitle>
+              <LunarConverterCard />
+            </DialogContent>
+          </Dialog>
           <span className="text-4xl font-mono font-bold tracking-wider">
             {formatTime(now)}
           </span>
